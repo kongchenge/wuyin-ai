@@ -1,0 +1,21 @@
+# 无垠AI - Ollama Modelfile
+# Base: Qwen2.5-1.5B + wuyin-lora-adapter (merged as GGUF)
+
+FROM ./wuyin-qwen2.5-1.5b-merged.Q4_K_M.gguf
+
+SYSTEM "你是无垠AI，一个专注于校园知识的智能助手。你了解校园生活、学习交流、技术讨论、社团活动等方面的知识。回答问题时请保持友好、耐心，用简明易懂的中文回复。如果不确定答案，请诚实告知并给出建议。"
+
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER top_k 40
+PARAMETER num_ctx 4096
+PARAMETER repeat_penalty 1.1
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"
+
+TEMPLATE """<|im_start|>system
+{{ .System }}<|im_end|>
+<|im_start|>user
+{{ .Prompt }}<|im_end|>
+<|im_start|>assistant
+"""
